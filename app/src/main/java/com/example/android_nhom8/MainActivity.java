@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    TextView txtMobi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menuExit:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you want to Logout?").setCancelable(false).setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                builder.setMessage("Are you want to Logout or Exit?").setCancelable(false).setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent2 = new Intent(MainActivity.this, login.class);
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
                         System.exit(0);
                     }
                 }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {

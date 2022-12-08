@@ -41,6 +41,7 @@ public class MusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MusicActivity.this, MainActivity.class));
+                finish();
             }
         });
 

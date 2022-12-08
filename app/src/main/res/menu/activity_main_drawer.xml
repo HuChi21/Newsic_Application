@@ -18,9 +18,6 @@
             android:icon="@drawable/music"
             android:title="Music"/>
 
-        <item
-            android:id="@+id/nav_youtube"
-            android:icon="@drawable/youtube"
-            android:title="Youtube"/>
+
     </group>
 </menu>

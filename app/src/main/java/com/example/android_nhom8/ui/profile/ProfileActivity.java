@@ -40,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -47,10 +48,10 @@ public class ProfileActivity extends AppCompatActivity {
         user0();
 
         //User 098765421:
-        user098765421();
-
-        //User 0981
-        user0981();
+//        user098765421();
+//
+//        //User 0981
+//        user0981();
 
     }
 
@@ -113,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void user0() {
-        databaseReference.child("users/0/fullname").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users/098765/fullname").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String string = snapshot.getValue(String.class);
@@ -127,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("users/0/email").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users/098765/email").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String string = snapshot.getValue(String.class);
