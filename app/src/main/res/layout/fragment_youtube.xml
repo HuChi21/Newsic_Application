@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_home"
+    tools:context=".ui.youtube.YoutubeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+        <ImageView
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logoapp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:text="&quot;Entertainment has a new definition&quot;"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="About Us"
+            android:textStyle="bold"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:paddingStart="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtMobile"
+            android:text="@string/aboutus"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            />
+        <TextView
+        android:paddingStart="40dp"
+            android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/aboutus2"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Contact Us"
+            android:textStyle="bold"
+            android:textSize="30dp"/>
+
+
+    </LinearLayout>
+</LinearLayout>

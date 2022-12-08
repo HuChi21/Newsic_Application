@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Android_Nhom8</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_news">News</string>
+    <string name="menu_music">Music</string>
+    <string name="menu_youtube">Home</string>
+    <string name="UserName">UserName</string>
+    <string name="Verified">Verified</string>
+    <string name="specificNews">Specific News</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="User">User</string>
+    <string name="aboutus">"With Spotify, it’s easy to find the right music or news for every moment – on your phone, your computer, your tablet and more.</string>
+    <string name="aboutus2">There are millions of tracks and episodes on Spotify.Choose what you want to listen to, or let Spotify surprise you."</string>
+
+</resources>
