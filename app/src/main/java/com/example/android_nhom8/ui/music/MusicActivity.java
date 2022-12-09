@@ -29,7 +29,7 @@ public class MusicActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView noMusicTextView;
     ArrayList<AudioModel> songsList = new ArrayList<>();
-    ImageButton imageButton;
+    ImageButton imageButton,restart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,16 @@ public class MusicActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(MusicActivity.this, MainActivity.class));
                 finish();
+            }
+        });
+        imageButton=(ImageButton)findViewById(R.id.restart);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition( 0, 0);
+                startActivity(getIntent());
+                overridePendingTransition( 0, 0);
             }
         });
 
@@ -91,6 +101,7 @@ public class MusicActivity extends AppCompatActivity {
             Toast.makeText(MusicActivity.this,"READ PERMISSION IS REQUIRED,PLEASE ALLOW FROM SETTTINGS",Toast.LENGTH_SHORT).show();
         }else
             ActivityCompat.requestPermissions(MusicActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},123);
+
     }
 
     @Override

@@ -30,14 +30,22 @@
                 app:tint="@color/white" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Songs "
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 />
-
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_restart_alt_24"
+                android:id="@+id/restart"
+                app:tint="@color/white"
+                android:layout_marginLeft="270dp"
+                android:background="#9795EE"
+                />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 

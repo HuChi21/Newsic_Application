@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String string = snapshot.getValue(String.class);
                 txtName.setText(string);
-                txtPhone.setText("string");
+                txtPhone.setText("0981");
             }
 
             @Override
