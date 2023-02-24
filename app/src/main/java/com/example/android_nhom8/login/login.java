@@ -5,14 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android_nhom8.MainActivity;
 import com.example.android_nhom8.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,63 +29,122 @@ import com.google.firebase.database.ValueEventListener;
 
 public class login extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://login-1fa3c-default-rtdb.firebaseio.com/");
-
-
+    private EditText email,password;
+    private Button btnLogin;
+    private TextView txtRegister,txtReset;
+    private FirebaseAuth firebaseAuth;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText phone = this.<EditText>findViewById(R.id.phone);
-        final EditText password = findViewById(R.id.password);
-        final Button loginBtn = findViewById(R.id.loginbtn);
-        final TextView registerNowBtn = findViewById(R.id.registerNowbtn);
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        txtRegister = (TextView) findViewById(R.id.txtRegister);
+        txtReset = (TextView) findViewById(R.id.txtReset);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String phonetxt = phone.getText().toString().trim();
-                final String passwordtxt = password.getText().toString().trim();
-                if (phonetxt.isEmpty() || passwordtxt.isEmpty()) {
-                    Toast.makeText(login.this, "Please enter your mobile or pass word", Toast.LENGTH_SHORT).show();
-                } else {
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            //check mobile/phone không có trong firebase
-                            if(snapshot.hasChild(phonetxt))
-                            {
-                                final String getPassword = snapshot.child(phonetxt).child("password").getValue(String.class);
+                LoginUser();
 
-                                if(getPassword.equals(passwordtxt))
-                                {
-                                    Toast.makeText(login.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
-                                    //đăng nhập thành công, chuyển đến Mainactivity
-                                    startActivity(new Intent(login.this, MainActivity.class));
-                                    finish();
-                                }
-                                else{
-                                    Toast.makeText(login.this, "Wrong Phone or Password", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
+            }
+        });
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(login.this, register.class ));
+                finish();
+            }
+        });
+        txtReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetPassword();
+            }
+        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+        hidesoftkeyboard(view);
+    }
 
-                        }
-                    });
+    private void LoginUser() {
+        String txtEmail = email.getText().toString().trim();
+        String txtPassword = password.getText().toString().trim();
+
+        if(txtEmail.isEmpty()){
+            email.setError("Email is required!");
+            email.requestFocus();
+            return;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(txtEmail).matches()){
+            email.setError("Please provide valid Email!");
+            email.requestFocus();
+            return;
+        }
+        if(txtPassword.isEmpty()){
+            password.setError("Password is required!");
+            password.requestFocus();
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        firebaseAuth.signInWithEmailAndPassword(txtEmail,txtPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Intent intent = new Intent(login.this,MainActivity.class);
+                    finish();
+                    overridePendingTransition( 0, 0);
+                    startActivity(intent);
+                    overridePendingTransition( 0, 0);
+                }else{
+                    Toast.makeText(login.this, "Failed to Login!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
-        registerNowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //chuyển đến đăng ký activity
-                startActivity(new Intent(login.this, register.class ));
+    }
+    private void resetPassword(){
+        String txtEmail = email.getText().toString().trim();
 
-            }
-        });
+                if(txtEmail.isEmpty()){
+                    email.setError("Email is required!");
+                    email.requestFocus();
+                    return;
+                }
+                if(!Patterns.EMAIL_ADDRESS.matcher(txtEmail).matches()){
+                    email.setError("Please provide valid Email!");
+                    email.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(txtEmail)) {
+                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+                firebaseAuth.sendPasswordResetEmail(txtEmail)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(login.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(login.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+
+    }
+    private void hidesoftkeyboard(View view){
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(login.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

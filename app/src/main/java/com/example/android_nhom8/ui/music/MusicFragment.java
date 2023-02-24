@@ -26,6 +26,7 @@ public class MusicFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MusicActivity.class);
         startActivity(intent);
+
         return root;
     }
 

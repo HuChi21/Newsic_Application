@@ -17,7 +17,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="User">User</string>
-    <string name="aboutus">"With Spotify, it’s easy to find the right music or news for every moment – on your phone, your computer, your tablet and more.</string>
-    <string name="aboutus2">There are millions of tracks and episodes on Spotify.Choose what you want to listen to, or let Spotify surprise you."</string>
+    <string name="aboutus">"With Newsic, it’s easy to find the right music or news for every moment – on your phone, your computer, your tablet and more.</string>
+    <string name="aboutus2">There are millions of tracks and episodes on Newsic.Choose what you want to listen to, or let Newsic surprise you."</string>
 
 </resources>

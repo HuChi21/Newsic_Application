@@ -1,30 +1,43 @@
 package com.example.android_nhom8.ui.profile;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android_nhom8.MainActivity;
 import com.example.android_nhom8.R;
 import com.example.android_nhom8.ui.news.NewsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.example.android_nhom8.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView txtName,txtPhone,txtEmail;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://login-1fa3c-default-rtdb.firebaseio.com/");
-    ImageButton imageButton;
+    private TextView txtName,txtPhone,txtEmail;
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+    private ImageButton imgBack;
+    private Button btnEdit;
+    private FirebaseUser user;
+    private String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,110 +48,49 @@ public class ProfileActivity extends AppCompatActivity {
         txtPhone = (TextView) findViewById(R.id.txtMobile);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
 
-        imageButton=(ImageButton)findViewById(R.id.imgButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        imgBack=(ImageButton)findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                 finish();
             }
         });
-
-        //User 0
-        user0();
-
-        //User 098765421:
-//        user098765421();
-//
-//        //User 0981
-//        user0981();
-
-    }
-
-    private void user0981() {
-        databaseReference.child("users/0981/fullname").addValueEventListener(new ValueEventListener() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+        getUserInfo();
+        btnEdit = (Button)findViewById(R.id.btnEdit);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtName.setText(string);
-                txtPhone.setText("0981");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onClick(View v) {
 
             }
         });
 
-        databaseReference.child("users/0981/email").addValueEventListener(new ValueEventListener() {
+
+    }
+
+    private void getUserInfo() {
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtEmail.setText(string);
+                User userProfile = snapshot.getValue(User.class);
+                if (userProfile != null) {
+                    String fullname = userProfile.fullname;
+                    String phone = userProfile.phone;
+                    String email = userProfile.email;
+
+                    txtName.setText(fullname);
+                    txtPhone.setText(phone);
+                    txtEmail.setText(email);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(ProfileActivity.this, "Something Error!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void user098765421() {
-        databaseReference.child("users/098765421/fullname").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtName.setText(string);
-                txtPhone.setText("098765421");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        databaseReference.child("users/098765421/email").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtEmail.setText(string);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void user0() {
-        databaseReference.child("users/098765/fullname").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtName.setText(string);
-                txtPhone.setText("0981");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        databaseReference.child("users/098765/email").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String string = snapshot.getValue(String.class);
-                txtEmail.setText(string);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }
